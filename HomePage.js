@@ -2,16 +2,16 @@ let loadData = async() => {
     try {
         document.getElementById("main").style.visibility = "hidden"
         document.getElementById("loading").style.display = "block"
-        let data = await fetch(`https://indonesia-covid-19.mathdro.id/api/`, {
+        let data = await fetch(`https://covid19.mathdro.id/api/countries/IDN`, {
             method: 'GET'
         })
 
         if (data.ok) {
             let mainData = await data.json()
-
+			let amount = [mainData.confirmed.value, mainData.recovered.value, mainData.deaths.value]
             let totalAmount = document.createElement("p")
             let totalCategory = document.createElement("p")
-            let totalAmountText = document.createTextNode(mainData.jumlahKasus)
+            let totalAmountText = document.createTextNode(amount[0]+amount[1]+amount[2])
             let totalCategoryText = document.createTextNode("Total Case")
 
             totalAmount.classList.add("amount-total")
@@ -23,7 +23,7 @@ let loadData = async() => {
             document.getElementById("total-box").appendChild(totalCategory)
 
             let category = ["Positive", "Recovered", "Death"]
-            let amount = [mainData.perawatan, mainData.sembuh, mainData.meninggal]
+            
             for (let i = 0; i < category.length; i++) {
                 let div = document.createElement("div")
 
